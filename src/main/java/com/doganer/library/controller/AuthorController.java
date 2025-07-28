@@ -1,5 +1,6 @@
 package com.doganer.library.controller;
 
+import com.doganer.library.dto.AuthorRequestDTO;
 import com.doganer.library.model.Author;
 import com.doganer.library.model.Book;
 import com.doganer.library.repository.AuthorRepository;
@@ -22,9 +23,24 @@ public class AuthorController {
     private BookRepository bookRepository;
 
     @PostMapping
-    public Author createAuthor(@Valid @RequestBody Author author) {
-        return authorRepository.save(author);
+    public Author createAuthor(@Valid @RequestBody AuthorRequestDTO request) {
+        Author author = new Author();
+        author.setName(request.getName());
+        author.setDate(request.getDate());
+
+        Author savedAuthor = authorRepository.save(author);
+
+        if (request.getBooks() != null) {
+            List<Book> books = request.getBooks().stream()
+                    .map(b -> new Book(null, b.getTitle(), savedAuthor))
+                    .toList();
+            bookRepository.saveAll(books);
+            savedAuthor.setBooks(books);
+        }
+
+        return savedAuthor;
     }
+
 
     @PutMapping("/{id}")
     public Author updateAuthor(@PathVariable Long id, @Valid @RequestBody Author updated) {
