@@ -9,12 +9,9 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    // Kitap başlığına göre filtreler
     List<Book> findByTitleContaining(String title);
 
-    // Yazar adının içinde geçenleri filtreler
-    List<Book> findByAuthorNameContaining(String authorName);
+    List<Book> findByAuthor_NameContaining(String authorName);
 
-    // Hem başlık hem yazar adına göre filtreler
-    List<Book> findByTitleContainingAndAuthorNameContaining(String title, String authorName);
+    List<Book> findByTitleContainingAndAuthor_NameContaining(String title, String authorName);
 }

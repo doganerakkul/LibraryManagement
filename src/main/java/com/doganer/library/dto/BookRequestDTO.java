@@ -11,6 +11,5 @@ public class BookRequestDTO {
 
     @NotBlank(message = "Yazar boş olamaz")
     private Author author;
-    private String name;
-    private String date;
+
 }

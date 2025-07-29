@@ -58,7 +58,7 @@ public class BookController {
                 }).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookResponseDTO> create(@RequestBody @Valid BookRequestDTO request) {
         Book newBook = new Book();
         newBook.setTitle(request.getTitle());
@@ -66,7 +66,7 @@ public class BookController {
 
         Book saved = service.save(newBook);
 
-        BookResponseDTO response = new BookResponseDTO();
+        BookResponseDTO response = service.create(request);
         response.setId(saved.getId());
         response.setTitle(saved.getTitle());
         response.setAuthor(saved.getAuthor());

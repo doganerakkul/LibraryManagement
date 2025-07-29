@@ -22,7 +22,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    @JsonIgnoreProperties("books")
+    @JsonBackReference
     private Author author;
 
 }
